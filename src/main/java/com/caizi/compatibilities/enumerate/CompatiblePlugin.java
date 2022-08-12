@@ -1,15 +1,15 @@
-package com.caizi.compatibilities;
+package com.caizi.compatibilities.enumerate;
 
 import com.caizi.compatibilities.provided.minecraft.MinecraftCompatibility;
 import org.bukkit.event.Listener;
 
-public enum CompatibilityList {
+public enum CompatiblePlugin implements BaseCompatiblePlugin {
 
 //    MMOITEMS("MMOItems", true, MMOItemsCompatibility.class),
 //    ITEMSADDER("ItemsAdder", true, ItemsAdderCompatibility.class),
     MINECRAFT("Minecraft", true, MinecraftCompatibility.class);
 
-    private final Boolean isNative;
+    private final boolean isNative;
     private String pluginName;
     private Class<? extends Listener> compatibilityPlugin;
 
@@ -21,17 +21,18 @@ public enum CompatibilityList {
      * @param isNative
      * @param compatibilityPlugin
      */
-    CompatibilityList(String pluginName, Boolean isNative, Class<? extends Listener> compatibilityPlugin) {
+    CompatiblePlugin(String pluginName, boolean isNative, Class<? extends Listener> compatibilityPlugin) {
         this.pluginName = pluginName;
         this.isNative = isNative;
         this.compatibilityPlugin = compatibilityPlugin;
     }
 
-    CompatibilityList(String pluginName, Boolean isNative) {
+    CompatiblePlugin(String pluginName, boolean isNative) {
         this.pluginName = pluginName;
         this.isNative = isNative;
     }
 
+    @Override
     public String getPluginName() {
         return pluginName;
     }
@@ -41,10 +42,12 @@ public enum CompatibilityList {
 
     }
 
-    public Boolean getNative() {
+    @Override
+    public boolean getNative() {
         return isNative;
     }
 
+    @Override
     public Class<? extends Listener> getCompatibilityPlugin() {
         return compatibilityPlugin;
     }

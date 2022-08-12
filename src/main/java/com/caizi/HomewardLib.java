@@ -27,8 +27,6 @@ public final class HomewardLib extends JavaPlugin {
         registerCommands();
         loadConfigurations();
         // Plugin startup logic
-
-
     }
 
     private void registerCommands() {

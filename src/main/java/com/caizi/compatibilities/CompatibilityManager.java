@@ -1,29 +1,36 @@
 package com.caizi.compatibilities;
 
+import com.caizi.compatibilities.enumerate.BaseCompatiblePlugin;
 import com.caizi.utils.logs.ConsoleLogger;
 import com.caizi.utils.logs.LoggerManipulationType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
+// TODO 写文档注释
+
+/**
+ * ???
+ *
+ * @since ?
+ * @author ?
+ */
 public class CompatibilityManager {
 
     public final HashMap<Plugin, Class<? extends Listener>> ACTIVATED_COMPATIBILITY = new HashMap<>();
-    private Plugin plugin;
-    private ConsoleLogger logger;
-    private CompatibilityListener compatibilityListener;
+    private final Plugin plugin;
+    private final ConsoleLogger logger;
+    private final CompatibilityListener compatibilityListener;
     protected final HashMap<String, Class<? extends Listener>> UNLOADED_COMPATIBILITY = new HashMap<>();
     private final String COMPATIBILITY_PACKAGE_NAME = "compatibilities.provided";
 
-
-    public CompatibilityManager(Plugin plugin, ConsoleLogger logger, Class<? extends Listener> clazz) {
+    public CompatibilityManager(Plugin plugin, ConsoleLogger logger, Class<? extends Listener> clazz, BaseCompatiblePlugin... compatiblePlugins) {
         this.plugin = plugin;
         this.logger = logger;
         compatibilityListener = new CompatibilityListener(logger, plugin);
-        addUnloadedCompatibilityList();
+        addUnloadedCompatibilityList(compatiblePlugins);
         addActivatedCompatibilityList(clazz);
         registerCompatibility();
     }
@@ -37,13 +44,12 @@ public class CompatibilityManager {
         ACTIVATED_COMPATIBILITY.put(plugin, clazz);
     }
 
-    protected void addUnloadedCompatibilityList() {
-
-        Arrays.stream(CompatibilityList.values()).toList().forEach(K -> {
-            if (Bukkit.getPluginManager().isPluginEnabled(K.getPluginName()) && K.getNative()) {
-                UNLOADED_COMPATIBILITY.put(K.getPluginName(), K.getCompatibilityPlugin());
+    private void addUnloadedCompatibilityList(BaseCompatiblePlugin... compatiblePlugins) {
+        for (BaseCompatiblePlugin compatiblePlugin : compatiblePlugins) {
+            if (Bukkit.getPluginManager().isPluginEnabled(compatiblePlugin.getPluginName()) && compatiblePlugin.getNative()) {
+                UNLOADED_COMPATIBILITY.put(compatiblePlugin.getPluginName(), compatiblePlugin.getCompatibilityPlugin());
             }
-        });
+        }
     }
 
     private void registerCompatibility() {
@@ -61,6 +67,4 @@ public class CompatibilityManager {
 
         });
     }
-
-
 }

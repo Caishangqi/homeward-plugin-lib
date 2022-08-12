@@ -41,6 +41,7 @@ Homeward 插件的库插件，提供一些只能我用得到的东西，呵呵�
 |--------------------------------------------------------------------------------|----------------|--------|
 | **[Homeward Brewing 协调酿造](https://github.com/Ba1oretto/Brewing)**              | **Ba1oretto**  | **1.18.2** |
 | **[Homeward Libs 协调核心](https://github.com/Caishangqi/homeward-plugin-lib)**                 | **Caishangqi** | **1.18.2** |
+| **[Homeward InfoBar 协调浮窗](https://github.com/Caishangqi/homeward-plugin-infobar)** | **Caishangqi** | **1.18.2** |
 
 ## 特别说明 Special Information
 

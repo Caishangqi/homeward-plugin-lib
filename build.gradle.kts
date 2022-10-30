@@ -38,6 +38,7 @@ dependencies {
     implementation("me.mattstudios.utils:matt-framework:1.4.6")
     implementation("org.reflections:reflections:0.10.2")
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compileOnly("me.clip:placeholderapi:2.11.2")
 
@@ -73,11 +74,6 @@ tasks {
         }
     }
 
-//    compileTestKotlin {
-//        kotlinOptions {
-//            jvmTarget = "1.8"
-//        }
-//    }
 
     compileJava {
         options.encoding = "UTF-8"
@@ -125,6 +121,17 @@ tasks.register<Copy>("copyLibJar") {
 
 }
 
+tasks.register<Copy>("copyJarToLib") {
+
+
+    mustRunAfter("shadowJar")
+    val projectLibJarName = "${getRootProject().name}-${version}.jar"
+    val normalJarPath = File(project.buildDir, "libs/${projectLibJarName}")
+    from(normalJarPath)
+    into(findProperty("develop.plugin.libs.folder")!!)
+
+}
+
 tasks.shadowJar {
     //relocate mt lib
     relocate("me.mattstudios.mf", "com.caizi.mf")
@@ -141,6 +148,7 @@ tasks.shadowJar {
 
 tasks.register("compileAll") {
     dependsOn("shadowJar")
-    dependsOn("copyLibJar")
+    //dependsOn("copyLibJar")
     dependsOn("copyJar")
+    dependsOn("copyJarToLib")
 }

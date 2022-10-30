@@ -1,8 +1,8 @@
-name: Homewardlib
+name: HomewardLib
 version: '${version}'
 main: com.caizi.HomewardLib
 api-version: 1.18
-prefix: HomewardLib
+prefix: HLib
 authors: [ Caizii ]
 description: The tools and lib for homeward plugin
 website: play.homeward.com
